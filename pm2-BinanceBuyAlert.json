@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "name": "binance-buy-alert",
+      "cwd": ".",
+      "script": "app.js",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
