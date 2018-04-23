@@ -9,10 +9,10 @@ const bot = new TelegramBot(config.telegram.token, { polling: false });
 socket.onUserData(binance, (res) => {
   if (res.eventType == 'executionReport' && res.side == 'BUY' && res.orderStatus == 'NEW') {
     var cost = parseFloat(res.price) * parseFloat(res.quantity);
-    var resp  = "BINANCE%0A";
-    resp     += "Just bought: " + res.symbol + "%0A";
-    resp     += "Rate: " + res.price + "%0A";
-    resp     += "Amount: " + res.quantity + "%0A";
+    var resp  = "BINANCE\n";
+    resp     += "Just bought: " + res.symbol + "\n";
+    resp     += "Rate: " + res.price + "\n";
+    resp     += "Amount: " + res.quantity + "\n";
     resp     += "Cost: " + cost.toFixed(8);
     bot.sendMessage(config.telegram.chatId, resp);
   }
