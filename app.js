@@ -5,11 +5,8 @@ const binance = new api.BinanceRest(config.binance);
 const socket = new api.BinanceWS(true);
 const bot = new TelegramBot(config.telegram.token, { polling: false });
 
-var inspect = require('util').inspect;
-
 // Socket listens for new Binance activity and sends alerts for new buy orders via Telegram
 socket.onUserData(binance, (res) => {
-
   if (res.eventType == 'executionReport' && res.side == 'BUY' && res.orderStatus == 'FILLED') {
     var cost = parseFloat(res.lastTradePrice) * parseFloat(res.accumulatedQuantity);
     var resp  = "BINANCE\n";
