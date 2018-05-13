@@ -1,3 +1,4 @@
+process.env["NTBA_FIX_319"] = 1;
 const config = require('./config.json');
 const api = require('binance');
 const TelegramBot = require('node-telegram-bot-api');
@@ -16,4 +17,6 @@ socket.onUserData(binance, (res) => {
     resp     += "Cost: " + cost.toFixed(8);
     bot.sendMessage(config.telegram.chatId, resp);
   }
+}).catch(e => {
+  console.error(e);
 });
