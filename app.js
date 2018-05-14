@@ -15,13 +15,17 @@ socket.onUserData(binance, (res) => {
     res.side == 'BUY' &&
     res.orderStatus == 'FILLED'
   ) {
-    var cost = parseFloat(res.lastTradePrice) * parseFloat(res.accumulatedQuantity);
-    var resp  = "BINANCE\n";
-    resp     += "Just bought: " + res.symbol + "\n";
-    resp     += "Rate: " + res.lastTradePrice + "\n";
-    resp     += "Amount: " + res.accumulatedQuantity + "\n";
-    resp     += "Cost: " + cost.toFixed(8);
-    bot.sendMessage(config.telegram.chatId, resp);
+    var lastTradePrice = res.lastTradePrice && parseFloat(res.lastTradePrice);
+    var accumulatedQuantity = res.accumulatedQuantity && parseFloat(res.accumulatedQuantity);
+    if (lastTradePrice && accumulatedQuantity) {
+      var cost = lastTradePrice * accumulatedQuantity;
+      var resp  = "BINANCE\n";
+      resp     += "Just bought: " + res.symbol + "\n";
+      resp     += "Rate: " + res.lastTradePrice + "\n";
+      resp     += "Amount: " + res.accumulatedQuantity + "\n";
+      resp     += "Cost: " + cost.toFixed(8);
+      bot.sendMessage(config.telegram.chatId, resp);
+    }
   }
 }).catch(e => {
   console.error(e);
